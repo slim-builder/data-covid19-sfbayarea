@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 
 from .power_bi_querier import PowerBiQuerier
 
@@ -7,6 +7,5 @@ class TimeSeriesDaily(PowerBiQuerier):
     property = 'date_result'
     source = 'c'
 
-    def _parse_data(self, response_json: Dict) -> Dict[int, int]:
-        data_pairs = super()._parse_data(response_json)
+    def postprocess_data(self, data_pairs: List[list]) -> Dict[str, int]:
         return { timestamp: cases for timestamp, cases in data_pairs }

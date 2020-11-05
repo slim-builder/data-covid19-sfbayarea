@@ -6,11 +6,10 @@ class CasesByGender(PowerBiQuerier):
     property = 'Gender'
     source = 'v'
 
-    def _parse_data(self, response_json: Dict[str, List]) -> Dict[str, int]:
-        results = super()._parse_data(response_json)
-        data_pairs = filter(lambda result: len(result) == 2, results)
+    def postprocess_data(self, data_pairs: List[list]) -> Dict[str, int]:
         label_to_skip = 'D'  # For some reason, there is a 'D' mixed in with genders
-        return { gender.lower(): count for gender, count in data_pairs if gender != label_to_skip }
+        data_pairs = filter(lambda result: len(result) == 2 and result[0] != label_to_skip, data_pairs)
+        return { gender.lower(): count for gender, count in data_pairs }
 
     def _select(self) -> List[Dict[str, Any]]:
         property = 'NumberOfCases'

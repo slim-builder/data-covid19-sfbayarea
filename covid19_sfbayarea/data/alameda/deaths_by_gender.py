@@ -7,9 +7,8 @@ class DeathsByGender(PowerBiQuerier):
     property = 'Gender'
     source = 'v'
 
-    def _parse_data(self, response_json: Dict[str, List]) -> Dict[str, int]:
-        results = super()._parse_data(response_json)
-        return { gender.lower(): count for gender, count in results }
+    def postprocess_data(self, data_pairs: List[list]) -> Dict[str, int]:
+        return { gender.lower(): count for gender, count in data_pairs }
 
     def _select(self) -> List[Dict[str, Any]]:
         property = 'NumberOfDeaths'

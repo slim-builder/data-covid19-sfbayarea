@@ -22,7 +22,8 @@ class Cumulative(PowerBiQuerier):
             }
         ]
 
-    def _binding(self) -> Dict[str, Any]:
+    @staticmethod
+    def _binding() -> Dict[str, Any]:
         return {
             'DataReduction': {
                 'DataVolume': 4,

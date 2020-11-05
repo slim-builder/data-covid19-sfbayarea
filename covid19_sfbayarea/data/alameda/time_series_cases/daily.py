@@ -6,8 +6,8 @@ class Daily(PowerBiQuerier):
     property = 'DtCreate'
     source = 'v'
 
-    def _parse_data(self, response_json: Dict) -> Dict[int, int]:
-        return dict(super()._parse_data(response_json))
+    def postprocess_data(self, data_pairs: List[list]) -> Dict[int, int]:
+        return dict(data_pairs)
 
     def _select(self) -> List[Dict[str, Any]]:
         measure = 'NumberOfCases'

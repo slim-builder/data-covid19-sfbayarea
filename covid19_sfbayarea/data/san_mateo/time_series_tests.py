@@ -10,8 +10,7 @@ class TimeSeriesTests(PowerBiQuerier):
     property = 'lab_collection_date'
     source = 'l'
 
-    def _parse_data(self, response_json: Dict) -> List[Dict[str, Any]]:
-        data_pairs = super()._parse_data(response_json)
+    def postprocess_data(self, data_pairs: List[list]) -> List[Dict[str, Any]]:
         results = [
             {
                 'date': self._timestamp_to_date(timestamp),
@@ -24,10 +23,12 @@ class TimeSeriesTests(PowerBiQuerier):
         self._add_cumulative_data(results)
         return results
 
-    def _timestamp_to_date(self, timestamp_in_milliseconds: int) -> str:
+    @staticmethod
+    def _timestamp_to_date(timestamp_in_milliseconds: int) -> str:
         return datetime.utcfromtimestamp(timestamp_in_milliseconds / 1000).strftime('%Y-%m-%d')
 
-    def _add_cumulative_data(self, results: List[Dict[str, Any]]) -> None:
+    @staticmethod
+    def _add_cumulative_data(results: List[Dict[str, Any]]) -> None:
         running_totals = { 'cumul_tests': 0, 'cumul_pos': 0, 'cumul_neg': 0, 'cumul_pend': 0 }
         for result in results:
             running_totals['cumul_tests'] += result['tests']
@@ -47,7 +48,8 @@ class TimeSeriesTests(PowerBiQuerier):
             self._aggregation('negative_per_day')
        ]
 
-    def _binding(self) -> Dict[str, Any]:
+    @staticmethod
+    def _binding() -> Dict[str, Any]:
         return {
             'Primary': { 'Groupings': [{ 'Projections': [0, 1, 2, 3] }] },
             'DataReduction': {

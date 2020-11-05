@@ -15,7 +15,8 @@ class TotalDeaths(PowerBiQuerier):
     def _select(self) -> List[Dict[str, Any]]:
         return [self._aggregation('n')]
 
-    def _binding(self) -> Dict[str, Any]:
+    @staticmethod
+    def _binding() -> Dict[str, Any]:
         return {
             'Primary': { 'Groupings': [{ 'Projections': [0] }] },
             'DataReduction': {

@@ -18,7 +18,8 @@ class TimeSeriesTestsPercent(PowerBiQuerier):
             self._aggregation('RollingSevenDayPercentagePositiveTests')
        ]
 
-    def _binding(self) -> Dict[str, Any]:
+    @staticmethod
+    def _binding() -> Dict[str, Any]:
         return {
             'Primary': { 'Groupings': [{ 'Projections': [0, 1] }] },
             'DataReduction': {

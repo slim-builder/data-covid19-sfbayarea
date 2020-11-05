@@ -14,6 +14,11 @@ class Querier:
         response_json = self._fetch_data()
         return self._parse_data(response_json)
 
+    # Used as a hook in inherited classes, override this method
+    def postprocess_data(self, data_pairs: List[list]) -> Any:
+        return data_pairs
+
+
     @staticmethod
     def _required_attributes() -> List[str]:
         return ['base_uri', 'function', 'json_path', 'model_id', 'name', 'powerbi_resource_key', 'property', 'source']
@@ -30,7 +35,8 @@ class Querier:
 
     def _parse_data(self, response_json: Dict[str, List]) -> Union[List, Dict]:
         results = dig(response_json, self.json_path)
-        return self._extract_lists(results)
+        data_pairs = self._extract_lists(results)
+        return self.postprocess_data(data_pairs)
 
     def _query_params(self) -> Dict[str, Any]:
         return {
@@ -92,7 +98,8 @@ class Querier:
             'Property': property
         }
 
-    def _binding(self) -> Dict[str, Any]:
+    @staticmethod
+    def _binding() -> Dict[str, Any]:
         return {
             'Primary': { 'Groupings': [{ 'Projections': [0, 1] }] },
             'DataReduction': {

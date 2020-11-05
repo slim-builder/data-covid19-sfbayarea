@@ -6,9 +6,8 @@ class DeathsByAge(PowerBiQuerier):
     property = 'AgeGroup'
     source = 'v'
 
-    def _parse_data(self, response_json: Dict[str, List]) -> List[Dict[str, int]]:
-        results = super()._parse_data(response_json)
-        return [ { 'group': group, 'raw_count': count } for group, count in results ]
+    def postprocess_data(self, data_pairs: List[list]) -> Dict[str, int]:
+        return [ { 'group': group, 'raw_count': count } for group, count in data_pairs ]
 
     def _select(self) -> List[Dict[str, Any]]:
         property = 'NumberOfDeaths'
