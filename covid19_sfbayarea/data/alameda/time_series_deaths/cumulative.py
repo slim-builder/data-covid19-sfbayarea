@@ -2,11 +2,9 @@ from typing import Any, Dict, List
 from ..power_bi_querier import PowerBiQuerier
 
 class Cumulative(PowerBiQuerier):
-    def __init__(self) -> None:
-        self.source = 'v'
-        self.name = 'V_Combined_data'
-        self.property = 'DtDeath'
-        super().__init__()
+    name = 'V_Combined_data'
+    property = 'DtDeath'
+    source = 'v'
 
     def _select(self) -> List[Dict[str, Any]]:
         measure = 'Cumulative Deaths'

@@ -3,14 +3,12 @@ from typing import Any, Dict, List
 from .power_bi_querier import PowerBiQuerier
 
 class TimeSeriesTests(PowerBiQuerier):
-    def __init__(self) -> None:
-        self.function = 'Sum'
-        self.model_id = 275728
-        self.powerbi_resource_key = '1b96a93b-9500-44cf-a3ce-942805b455ce'
-        self.source = 'l'
-        self.name = 'lab_cases_by_date'
-        self.property = 'lab_collection_date'
-        super().__init__()
+    function = 'Sum'
+    model_id = 275728
+    name = 'lab_cases_by_date'
+    powerbi_resource_key = '1b96a93b-9500-44cf-a3ce-942805b455ce'
+    property = 'lab_collection_date'
+    source = 'l'
 
     def _parse_data(self, response_json: Dict) -> List[Dict[str, Any]]:
         data_pairs = super()._parse_data(response_json)

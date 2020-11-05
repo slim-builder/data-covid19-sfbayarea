@@ -3,7 +3,7 @@ from .power_bi_querier import PowerBiQuerier
 from covid19_sfbayarea.utils import dig
 
 class TotalDeaths(PowerBiQuerier):
-    json_path = PowerBiQuerier.DEFAULT_JSON_PATH +  [0, 'M0']
+    json_path = PowerBiQuerier.DEFAULT_JSON_PATH + [0, 'M0']
     function = 'Sum'
     name = 'deaths by race'
     property = 'n'

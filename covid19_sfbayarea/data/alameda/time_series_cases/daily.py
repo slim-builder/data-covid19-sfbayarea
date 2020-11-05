@@ -2,11 +2,9 @@ from typing import Any, Dict, List
 from ..power_bi_querier import PowerBiQuerier
 
 class Daily(PowerBiQuerier):
-    def __init__(self) -> None:
-        self.source = 'v'
-        self.name = 'V_Combined_data'
-        self.property = 'DtCreate'
-        super().__init__()
+    name = 'V_Combined_data'
+    property = 'DtCreate'
+    source = 'v'
 
     def _parse_data(self, response_json: Dict) -> Dict[int, int]:
         return dict(super()._parse_data(response_json))
