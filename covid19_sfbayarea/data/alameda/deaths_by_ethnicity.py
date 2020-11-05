@@ -7,7 +7,7 @@ class DeathsByEthnicity(PowerBiQuerier):
     property = 'RaceEth'
     source = 'v'
     # We have to override this method instead because we need the ethnicity labels
-    parse_data = parse_ethnicity_data
+    _parse_data = parse_ethnicity_data
 
     def _select(self) -> List[Dict[str, Any]]:
         return [
