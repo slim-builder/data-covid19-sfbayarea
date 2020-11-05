@@ -3,16 +3,14 @@ from .power_bi_querier import PowerBiQuerier
 from covid19_sfbayarea.utils import dig
 
 class TotalDeaths(PowerBiQuerier):
-    JSON_PATH = ['results', 0, 'result', 'data', 'dsr', 'DS', 0, 'PH', 0, 'DM0', 0, 'M0']
-    def __init__(self) -> None:
-        self.function = 'Sum'
-        self.name = 'deaths by race'
-        self.property = 'n'
-        self.source = 'd1'
-        super().__init__()
+    json_path = PowerBiQuerier.DEFAULT_JSON_PATH +  [0, 'M0']
+    function = 'Sum'
+    name = 'deaths by race'
+    property = 'n'
+    source = 'd1'
 
     def _parse_data(self, response_json: Dict[str, List]) -> int: # type: ignore
-        return cast(int, dig(response_json, self.JSON_PATH))
+        return cast(int, dig(response_json, self.json_path))
 
     def _select(self) -> List[Dict[str, Any]]:
         return [self._aggregation('n')]
