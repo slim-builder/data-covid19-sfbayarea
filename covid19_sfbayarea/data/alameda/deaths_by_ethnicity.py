@@ -14,7 +14,7 @@ class DeathsByEthnicity(PowerBiQuerier):
         totals = {'Overall', 'Overall Known Race/Ethnicity'}
         return {
             ethnicity_label: count
-            for ethnicity_label_index, count in results
+            for ethnicity_label_index, count in results.items()
             if (ethnicity_label := ethnicity_labels[ethnicity_label_index].strip()) not in totals
         }
 

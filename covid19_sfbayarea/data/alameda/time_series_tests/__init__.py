@@ -1,12 +1,12 @@
 from datetime import datetime
 from typing import Any, Dict, List
-from .time_series_tests_total import TimeSeriesTestsTotal
-from .time_series_tests_percent import TimeSeriesTestsPercent
+from .total import Total
+from .percent import Percent
 
 class TimeSeriesTests():
     def get_data(self) -> List[Dict[str, Any]]:
-        total_tests = dict(TimeSeriesTestsTotal().get_data()[1:])
-        percent_positive_tests = dict(TimeSeriesTestsPercent().get_data()[1:])
+        total_tests = Total().get_data()
+        percent_positive_tests = Percent().get_data()
         self._assert_total_and_percent_cases_count_matches(total_tests, percent_positive_tests)
 
         return [{

@@ -1,13 +1,17 @@
 from typing import Any, Dict, List
-from .power_bi_querier import PowerBiQuerier
+from ..power_bi_querier import PowerBiQuerier
 
-class TimeSeriesTestsTotal(PowerBiQuerier):
+class Percent(PowerBiQuerier):
     function = 'Sum'
     model_id = 296535
-    name = 'V_Tests_RollingSevenDayAverage'
+    name = 'V_Tests_RollingSevenDayPercentagePositive'
     powerbi_resource_key = '032423d3-f7a4-473b-b50c-bf5518918335'
     property = 'Date'
     source = 'v'
+
+    @staticmethod
+    def postprocess_data(data_pairs: List[list]) -> Dict[str, int]:
+        return dict(data_pairs[1:])
 
     def _select(self) -> List[Dict[str, Any]]:
         return [
@@ -15,7 +19,7 @@ class TimeSeriesTestsTotal(PowerBiQuerier):
                 'Column': self._column_expression(self.property),
                 'Name': f'{self.name}.{self.property}'
             },
-            self._aggregation('RollingSevenDayAverage')
+            self._aggregation('RollingSevenDayPercentagePositiveTests')
        ]
 
     @staticmethod

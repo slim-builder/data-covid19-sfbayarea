@@ -15,9 +15,9 @@ class Querier:
         return self._parse_data(response_json)
 
     # Used as a hook in inherited classes, override this method
-    def postprocess_data(self, data_pairs: List[list]) -> Any:
-        return data_pairs
-
+    @staticmethod
+    def postprocess_data(data_pairs: List[List]) -> Dict[str, int]:
+        return dict(data_pairs)
 
     @staticmethod
     def _required_attributes() -> List[str]:
@@ -114,11 +114,12 @@ class Querier:
             if not getattr(self, required_attribute):
                 raise(UnboundLocalError(f'Please set {required_attribute}.'))
 
-    def _extract_lists(self, results: List[Dict]) -> List[List]:
+    @staticmethod
+    def _extract_lists(results: List[Dict]) -> List[List]:
         pairs: List[List] = []
         for result in results:
             if 'R' in result:
-                for repeated_index, is_repeated in enumerate(self._determine_repeated_values(result['R'])):
+                for repeated_index, is_repeated in enumerate(Querier._determine_repeated_values(result['R'])):
                     if is_repeated:
                         previous_result = pairs[-1]
                         result['C'].insert(repeated_index, previous_result[repeated_index])

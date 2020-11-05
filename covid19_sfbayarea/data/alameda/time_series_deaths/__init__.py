@@ -6,8 +6,8 @@ from .cumulative import Cumulative
 
 class TimeSeriesDeaths():
     def get_data(self) -> List[Dict[str, Any]]:
-        daily_deaths = dict(Daily().get_data())
-        cumulative_deaths = dict(Cumulative().get_data())
+        daily_deaths = Daily().get_data()
+        cumulative_deaths = Cumulative().get_data()
         self._assert_daily_and_cumulative_deaths_match(daily_deaths, cumulative_deaths)
 
         return [{

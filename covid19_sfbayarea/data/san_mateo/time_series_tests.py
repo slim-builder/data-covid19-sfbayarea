@@ -10,17 +10,18 @@ class TimeSeriesTests(PowerBiQuerier):
     property = 'lab_collection_date'
     source = 'l'
 
-    def postprocess_data(self, data_pairs: List[list]) -> List[Dict[str, Any]]:
+    @staticmethod
+    def postprocess_data(data_pairs: List[List]) -> List[Dict[str, Any]]:
         results = [
             {
-                'date': self._timestamp_to_date(timestamp),
+                'date': TimeSeriesTests._timestamp_to_date(timestamp),
                 'tests': positive + negative + pending,
                 'positive': positive,
                 'negative': negative,
                 'pending': pending
             } for timestamp, positive, pending, negative in data_pairs
         ]
-        self._add_cumulative_data(results)
+        TimeSeriesTests._add_cumulative_data(results)
         return results
 
     @staticmethod

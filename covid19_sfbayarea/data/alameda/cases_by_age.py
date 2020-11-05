@@ -1,13 +1,12 @@
 from typing import Any, Dict, List
 from .power_bi_querier import PowerBiQuerier
+from covid19_sfbayarea.data.power_bi.post_processing import postprocess_counts_by_age
 
 class CasesByAge(PowerBiQuerier):
     name = 'V_Combined_data'
     property = 'AgeGroup'
+    postprocess_data = postprocess_counts_by_age
     source = 'v'
-
-    def postprocess_data(self, data_pairs: List[list]) -> List[Dict[str, int]]:
-        return [ { 'group': group, 'raw_count': count } for group, count in data_pairs ]
 
     def _select(self) -> List[Dict[str, Any]]:
         property = 'NumberOfCases'
